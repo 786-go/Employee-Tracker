@@ -93,6 +93,59 @@ function employeeTracker() {
                 
                 })
             }
+            else if (responses.q1 == 'Add an employee') {
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'emp1',
+                        message: 'What is the first name of the employee you want to add?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'emp2',
+                        message: 'What is the last name of the employee you want to add?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'emp3',
+                        message: 'What is the role ID of the employee you want to add?[Enter an integer]',
+                    },
+                    {
+                        type: 'list',   
+                        choices:[1,2,3,4],
+                        name: 'emp4',
+                        message: 'What is the ID of the manager for the new employee?',
+                    },
+                ]).then(function ({emp1, emp2, emp3, emp4})  {
+                    db.query('INSERT INTO EMPLOYEE(FIRST_NAME,LAST_NAME,ROLE_ID,MANAGER_ID)VALUES(?,?,?,?);',[emp1, emp2, emp3, emp4], function (err, data) {
+                        if (err) throw err;
+                        console.table(data)
+                        employeeTracker()
+                    })
+                
+                })
+            }
+            else if (responses.q1 == 'Update an employee role') {
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'updemp',
+                        choices: '[]',
+                        message: 'Which employee do you want to update?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'emp2',
+                        message: 'What is the last name of the employee you want to add?',
+                    }
+                ]).then(function ({updemp, emp2})  {
+                    db.query('updateemployee set role_id = ? where id = ?;',[updemp, emp2], function (err, data) {
+                        if (err) throw err;
+                        console.table(data)
+                        employeeTracker()
+                    })
+                })
+            }
             else {
                 console.log("Thank you for using the program.")
                 db.end()

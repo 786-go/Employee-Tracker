@@ -6,5 +6,4 @@ select * from roles;
 
 select * from employee;
 
-updateemployee set role_id = ? where id = ?,
-[role_id,employeeid]
+updateemployee set role_id = ? where id = ?,[role_id,employeeid]
