@@ -16,6 +16,8 @@ db.connect(function (err) {
 
 });
 
+
+
 function employeeTracker() {
     inquirer.prompt([
         {
@@ -40,7 +42,7 @@ function employeeTracker() {
                     console.table(data)
                     employeeTracker()
                 })
-                
+
             }
             else if (responses.q1 == 'View all employees') {
                 db.query('select * from employee, roles where employee.role_id=roles.id;', function (err, data) {
@@ -48,7 +50,7 @@ function employeeTracker() {
                     console.table(data)
                     employeeTracker()
                 })
-                
+
             }
             else if (responses.q1 == 'Add a department') {
                 inquirer.prompt([
@@ -57,13 +59,13 @@ function employeeTracker() {
                         name: 'dept',
                         message: 'What is the name of the department you want to add?',
                     },
-                ]).then(function ({ dept })  {
-                    db.query('INSERT INTO DEPARTMENT(NAME)VALUES(?);',dept, function (err, data) {
+                ]).then(function ({ dept }) {
+                    db.query('INSERT INTO DEPARTMENT(NAME)VALUES(?);', dept, function (err, data) {
                         if (err) throw err;
                         console.table(data)
                         employeeTracker()
                     })
-                
+
                 })
             }
             else if (responses.q1 == 'Add a role') {
@@ -80,17 +82,17 @@ function employeeTracker() {
                     },
                     {
                         type: 'list',
-                        choices:[1,2,3,4],
+                        choices: [1, 2, 3, 4],
                         name: 'dept_id',
                         message: 'What is the department ID of the role you want to add?',
                     },
-                ]).then(function ({roletitle, rolesalary,dept_id})  {
-                    db.query('INSERT INTO ROLES(TITLE, SALARY, department_id)VALUES(?,?,?);',[roletitle, rolesalary, dept_id], function (err, data) {
+                ]).then(function ({ roletitle, rolesalary, dept_id }) {
+                    db.query('INSERT INTO ROLES(TITLE, SALARY, department_id)VALUES(?,?,?);', [roletitle, rolesalary, dept_id], function (err, data) {
                         if (err) throw err;
                         console.table(data)
                         employeeTracker()
                     })
-                
+
                 })
             }
             else if (responses.q1 == 'Add an employee') {
@@ -111,18 +113,18 @@ function employeeTracker() {
                         message: 'What is the role ID of the employee you want to add?[Enter an integer]',
                     },
                     {
-                        type: 'list',   
-                        choices:[1,2,3,4],
+                        type: 'list',
+                        choices: [1, 2, 3, 4],
                         name: 'emp4',
                         message: 'What is the ID of the manager for the new employee?',
                     },
-                ]).then(function ({emp1, emp2, emp3, emp4})  {
-                    db.query('INSERT INTO EMPLOYEE(FIRST_NAME,LAST_NAME,ROLE_ID,MANAGER_ID)VALUES(?,?,?,?);',[emp1, emp2, emp3, emp4], function (err, data) {
+                ]).then(function ({ emp1, emp2, emp3, emp4 }) {
+                    db.query('INSERT INTO EMPLOYEE(FIRST_NAME,LAST_NAME,ROLE_ID,MANAGER_ID)VALUES(?,?,?,?);', [emp1, emp2, emp3, emp4], function (err, data) {
                         if (err) throw err;
                         console.table(data)
                         employeeTracker()
                     })
-                
+
                 })
             }
             else if (responses.q1 == 'Update an employee role') {
@@ -130,16 +132,16 @@ function employeeTracker() {
                     {
                         type: 'list',
                         name: 'updemp',
-                        choices: '[]',
-                        message: 'Which employee do you want to update?',
+                        choices: [Alex],
+                        message: "Which employee's role do you want to update?",
                     },
                     {
                         type: 'input',
                         name: 'emp2',
-                        message: 'What is the last name of the employee you want to add?',
+                        message: "What will be this employee's new role?",
                     }
-                ]).then(function ({updemp, emp2})  {
-                    db.query('updateemployee set role_id = ? where id = ?;',[updemp, emp2], function (err, data) {
+                ]).then(function ({ updemp, emp2 }) {
+                    db.query('updateemployee set role_id = ? where id = ?;', [updemp, emp2], function (err, data) {
                         if (err) throw err;
                         console.table(data)
                         employeeTracker()

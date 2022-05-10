@@ -1,7 +1,8 @@
 USE emp_tracker;
 
 
-INSERT INTO DEPARTMENT(NAME)VALUES("Sales"),("R & D"), ("HR"), ("Service");
+INSERT INTO DEPARTMENT(NAME)VALUES
+("Sales"),("R & D"), ("HR"), ("Service");
 
 INSERT INTO ROLES(TITLE, SALARY, department_id) VALUES
 ("manager", 80000, 1),
